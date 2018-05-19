@@ -11,7 +11,7 @@ public class Solution {
 		Solution temp = new Solution();
 		//temp.divide(-2147483648, -1);
 				
-		ListNode l1 = temp.new ListNode(1);
+		/*ListNode l1 = temp.new ListNode(1);
 		ListNode dummy = l1;
 		dummy.next = temp.new ListNode(4);
 		dummy = dummy.next;
@@ -28,7 +28,10 @@ public class Solution {
 		
 		
 		ListNode[] lists = {l1, l2, l3};
-		temp.mergeKLists(lists);
+		temp.mergeKLists(lists);*/
+
+		int[] nums = {1, 1, 2};
+		temp.removeDuplicates(nums);
 	}
 	
     public int[] twoSum(int[] nums, int target) {
@@ -430,12 +433,37 @@ public class Solution {
      }
      
      public ListNode mergeKLists(ListNode[] lists) {
-    	 ListNode ret = new ListNode(0);
-    	 ListNode iterator = ret.next;
+    	 ListNode iterator = null;
     	 for (int i = 0; i < lists.length; i++) {
     		 iterator = mergeTwoLists(iterator, lists[i]);
     	 }
-    	 return ret.next;
+    	 return iterator;
+     }
+     
+     public int removeDuplicates(int[] nums) {
+    	 if (nums.length == 0) {
+    		 return 0;
+    	 }
+    	 int j = 0;
+    	 for (int i=1; i < nums.length; i++) {
+    		 if (nums[i] != nums[j]) {
+    			 nums[++j] = nums[i];
+    		 }
+    	 }
+         return j+1;
+     }
+     
+     public ListNode removeNthFromEnd(ListNode head, int n) {
+         
+     }
+     
+     public String longestCommonPrefix(String[] strs) {
+         String ret = "";
+         int j = 0;
+         for (int i = 0; i<strs.length; i++) {
+        	 
+         }
+         return ret;
      }
      
 }
