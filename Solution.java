@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Stack;
 
 public class Solution {
-	
+		
 	public static void main(String[] args) {
 		Solution temp = new Solution();
 		//temp.divide(-2147483648, -1);
@@ -454,7 +454,23 @@ public class Solution {
      }
      
      public ListNode removeNthFromEnd(ListNode head, int n) {
+    	 
+    	 if (n == 0) {
+    		 return head.next;
+    	 }
+    	 
+         int index = 0;
+         ListNode prev = null;
+         ListNode iterator = head;
+         while (iterator != null) {
+        	 if (index == n) {
+        		 prev.next = iterator.next;
+        	 }
+        	 prev = iterator;
+        	 iterator = iterator.next;
+         }
          
+         return head;
      }
      
      public String longestCommonPrefix(String[] strs) {
