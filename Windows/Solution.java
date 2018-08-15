@@ -1777,6 +1777,7 @@ public class Solution {
 	        		min[0] = nums[i];
 	        	}
 
+	        	
 	        }
 	        return Math.max(max[0] * max[1] * max[2], min[0] * min[1] * max[2]);
 	 }
