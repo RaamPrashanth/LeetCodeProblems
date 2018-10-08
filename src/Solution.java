@@ -1,7 +1,8 @@
-package raam;
+
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Stack;
 
@@ -32,10 +33,15 @@ public class Solution {
 
 		int[] nums = {1, 1, 2};
 		temp.removeDuplicates(nums);
+		String s = "Bob hit a ball, the hit BALL flew far after it was hit.";
+		String[] st = new String[]{"hit"};
+		temp.mostCommonWord(s, st);
+		
 	}
 	
     public int[] twoSum(int[] nums, int target) {
     	HashMap<Integer, Integer> map = new HashMap<Integer, Integer>();
+    	map.keySet().iterator();
     	for (int i = 0; i < nums.length; i++) {
     		int diff = target-nums[i];
     		if (map.containsKey(diff)) {
@@ -59,7 +65,15 @@ public class Solution {
       	int temp = 0;
       	
       	while (l1 != null || l2 != null) {
-  			temp = carry + ((l1 != null)? l1.val : 0) + ((l2 != null)? l2.val : 0); 
+  			temp = carry;
+  			if (l1 != null) {
+  				l1 = l1.next;
+  			    temp += l1.val;
+  			}
+  			if (l2 != null) {
+  				l2 = l2.next;
+  				temp += l2.val;
+  			}
   			if (temp > 9) {
   				carry = temp/10;
   				temp = temp%10;
@@ -68,17 +82,14 @@ public class Solution {
   			}
   			iterator.next = new ListNode(temp);
   			iterator = iterator.next;
-  			if (l1 != null) 
-  				l1 = l1.next;
-  			if (l2 != null)
-  				l2 = l2.next;
+  				
       	}
       	
       	if (carry > 0) {
       		iterator.next = new ListNode(carry);
       	}
       	
-          return returnNode;    
+          return returnNode.next;    
       }
      
      public int lengthOfLongestSubstring(String s) {
@@ -473,13 +484,234 @@ public class Solution {
          return head;
      }
      
-     public String longestCommonPrefix(String[] strs) {
+     /**public String longestCommonPrefix(String[] strs) {
          String ret = "";
          int j = 0;
          for (int i = 0; i<strs.length; i++) {
         	 
          }
          return ret;
+     }**/
+     
+     public int missingNumber(int[] nums) {
+    	 int sum = nums.length * (nums.length+1)/2;
+         for (int n : nums) {
+        	 sum -= n;
+         }
+         return sum;
      }
      
+     public String numberToWords(int num) {
+    	 StringBuilder sb = new StringBuilder();
+         int pos = 0; // 0 - ones 1 - tens 2 - hundreds 3 - thousands 4 - 
+         while (num > 0) {
+        	 if (pos % 2 == 0) {
+        		 sb.append(" " + getOnes(num/10));
+        	 } else {
+        		 //sb.append(c)
+        	 }
+        	 
+         }
+         
+    	 if ((10 < num) && (num < 20)) {
+    		 sb.append(" " +  getTeens(num));
+    	 }
+    	 
+    	 return sb.toString().trim();
+     }
+     
+     private String getOnes(int i) {
+    	 switch(i) {
+    	 	case 0 : return "";
+    	 	case 1 : return "One";
+    	 	case 2 : return "Two";
+    	 	case 3 : return "Three";
+    	 	case 4 : return "Four";
+    	 	case 5 : return "Five";
+    	 	case 6 : return "Six";
+    	 	case 7 : return "Seven";
+    	 	case 8 : return "Eight";
+    	 	case 9 : return "Nine";
+    	 	default : return "";
+    	 }
+     }
+     
+     private String getTens(int i) {
+    	 switch(i) {
+    	 	case 0 : return "";
+    	 	case 1 : return "Ten";
+    	 	case 2 : return "Twenty";
+    	 	case 3 : return "Thirty";
+    	 	case 4 : return "Fourty";
+    	 	case 5 : return "Fivety";
+    	 	case 6 : return "Sixty";
+    	 	case 7 : return "Seventy";
+    	 	case 8 : return "Eighty";
+    	 	case 9 : return "Ninenty";
+    	 	default : return "";
+    	 }
+     }
+     
+     private String getTeens(int i) {
+    	 switch(i) {
+    	 	case 10 : return "Ten";
+    	 	case 11 : return "Eleven";
+    	 	case 12 : return "Twelve";
+    	 	case 13 : return "Thirteen";
+    	 	case 14 : return "Fourteen";
+    	 	case 15 : return "Fiveteen";
+    	 	case 16 : return "Sixteen";
+    	 	case 17 : return "Seventeen";
+    	 	case 18 : return "Eighteen";
+    	 	case 19 : return "Nineteen";
+    	 	default : return "";
+    	 }
+     }
+     
+     public String longestCommonPrefix(String[] strs) {
+         if (strs.length == 0)
+             return "";
+    	 String ret = strs[0];
+    	 for (int i = 1; i < strs.length ; i++) {
+    		 while (strs[i].indexOf(ret) != 0) {
+    			 ret = ret.substring(0, ret.length()-1);
+    			 if (ret == "") {
+    				 return "";
+    			 }
+    		 }
+    	 }
+    	 
+    	 return ret;
+     }
+
+     public ListNode reverseList(ListNode head) {
+         ListNode preNode = null;
+         ListNode curNode = null;
+         
+         while (head != null) {
+        	 curNode = head;
+        	 head = head.next;
+        	 curNode.next = preNode;
+        	 preNode = curNode;
+         }
+         
+         return curNode;
+     }
+     
+     public boolean hasCycle(ListNode head) {
+    	 List<ListNode> validator = new ArrayList<ListNode>();
+    	 while (head != null) {
+    		 if (validator.contains(head)) {
+    			 return true;
+    		 } else {
+    			 validator.add(head);
+    			 head = head.next;
+    		 }
+    	 }
+    	 
+    	 return false;
+    	 
+     }
+     
+     public String mostCommonWord(String paragraph, String[] banned) {
+         HashMap<String, Integer> map = new HashMap<String, Integer>();
+         String[] para = paragraph.replaceAll("[^a-zA-Z ]", "").toLowerCase().split("\\s+");
+         
+         for (String s : para) {
+        	 if (map.containsKey(s)) {
+        		 map.put(s, map.get(s)+1);
+        	 } else {
+        		 map.put(s,1);
+        	 }
+         }
+         for (String s : banned) {
+        	 map.remove(s);
+         }
+         Iterator<String> it = map.keySet().iterator();
+         int max = 0;
+         String maxString = "";
+         while (it.hasNext()) {
+        	String s = it.next();
+        	if (map.get(s) > max) {
+        		max = map.get(s);
+        		maxString = s;
+        	}
+         }
+         return maxString;
+         
+     }
+     
+     public void merge(int[] nums1, int m, int[] nums2, int n) {
+    	int i, j, k;
+    	i = m-1;
+    	j = n -1;
+    	k = m + n -1;
+        while (i >=  0 && j >= 0) {
+        	if (nums1[i] > nums2[j]) {
+        		nums1[k] = nums1[i];
+        		i--;
+        	} else {
+        		nums1[k] = nums2[j];
+        		j--;
+        	}
+        	k--;
+        }
+        
+        while (j >= 0) {
+        	nums1[k] = nums2[j];
+        	j--;
+        	k--;
+        }
+        
+     }
+     
+     public List<String> fizzBuzz(int n) {
+    	 List<String> list = new ArrayList<String>();
+         for (int i = 1; i < n; i++) {
+        	 String c = "";
+        	 if (i%3 == 0) {
+        		 c = c + "Fizz";
+        	 }
+        	 if (i%5 == 0) {
+        		 c = c + "Buzz";
+        	 }
+        	 if (c.isEmpty()) {
+        		 list.add("" + i);
+        	 } else {
+        		 list.add(c);
+        	 }
+         }
+         return list;
+     }
+     
+     public void deleteNode(ListNode node) {
+         node.val = node.next.val;
+         node.next = node.next.next;
+     }
+     
+     public void moveZeroes(int[] nums) {
+       int i,j;
+       for (i = 0, j =0; j < nums.length; j++) {
+    	   if (nums[j] != 0) {
+    		   nums[i] = nums[j];
+    		   i++;
+    	   }
+       }
+       while (i <= j) {
+    	   nums[i] = 0;
+       }
+     }
+     
+     public class TreeNode {
+    	 *     int val;
+    	 *     TreeNode left;
+    	 *     TreeNode right;
+    	 *     TreeNode(int x) { val = x; }
+    	 * }
+     
+     public TreeNode mergeTrees(TreeNode t1, TreeNode t2) {
+    	 TreeNode ret = null;
+    	 return ret;
+    	 
+     }
 }
