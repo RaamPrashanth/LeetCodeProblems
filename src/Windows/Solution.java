@@ -2653,6 +2653,32 @@ public class Solution {
 	      }
 	      return new ArrayList<List<String>>(map.values());
 	    }
+	    
+	    public List<String> subdomainVisits(String[] cpdomains) {
+	    	Map<String, Integer> map = new HashMap<String, Integer>();
+	    	List<String> ret = new ArrayList<String>();
+	        for (String st : cpdomains) {
+	        	String[] split = st.split(" ");
+	        	String[] subDomain = split[1].split(".");
+	        	int count = Integer.parseInt(split[0]);
+	        	if (!map.containsKey(split[1])) {
+	        		map.put(split[1], 0);
+	        	}
+	        	map.put(split[1],map.get(split[1])+count);
+	        	for (String sub : subDomain) {
+	        		split[1] = split[1].substring(sub.length(), split[1].length()+1);
+		        	if (!map.containsKey(split[1])) {
+		        		map.put(split[1], 0);
+		        	}
+		        	map.put(split[1],map.get(split[1])+count);
+	        	}
+	        }
+	        
+	        for (Map.Entry<String, Integer> entry : map.entrySet()) {
+	        	ret.add(entry.getValue() + " " + entry.getKey());
+	        }
+	        return ret;
+	    }
 }
 
 //[0,1,3,6,10,13,15,18]
